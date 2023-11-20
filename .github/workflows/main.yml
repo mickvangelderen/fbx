@@ -1,0 +1,63 @@
+name: main
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  minimal_versions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Install Rust toolchains
+      run: |
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+        rustup --quiet toolchain install nightly --profile minimal --component rustfmt,clippy
+        rustup --quiet toolchain install stable --profile minimal --component rustfmt,clippy
+
+    - uses: actions/checkout@v4
+
+    - uses: Swatinem/rust-cache@v2
+
+    - name: Direct minimal versions
+      run: cargo +nightly -Zdirect-minimal-versions update
+
+    - name: Build
+      run: cargo build --all-targets --all-features --locked
+
+    - name: Test
+      run: cargo test --all-features --locked
+
+  main:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Install Rust toolchains
+      run: |
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+        rustup --quiet toolchain install nightly --profile minimal --component rustfmt,clippy
+        rustup --quiet toolchain install stable --profile minimal --component rustfmt,clippy
+
+    - uses: actions/checkout@v4
+
+    - uses: Swatinem/rust-cache@v2
+
+    - name: Format
+      run: cargo +nightly fmt --check
+
+    - name: Build
+      run: cargo build --all-targets --all-features --locked
+
+    - name: Lint
+      run: cargo clippy --all-targets --all-features --locked -- -D warnings
+
+    - name: Test
+      run: cargo test --all-features --locked
+
+    - name: Ensure no git changes were introduced
+      run: |
+        [ -z "$(git status --porcelain)" ] || exit 1
