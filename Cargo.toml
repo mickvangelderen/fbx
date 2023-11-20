@@ -1,7 +1,18 @@
 [package]
 name = "fbx"
 version = "0.2.0"
+authors = ["Mick van Gelderen <mickvangelderen@gmail.com>"]
+categories = ["encoding", "game-development", "graphics", "parser-implementations", "rendering::data-formats"]
+keywords = ["fbx", "file", "parser", "scene", "graphics"]
+description = """
+The fbx package allows you to read FBX files. This file format was originally developed by Kaydara
+for MotionBuilder. Kaydara was later acquired by Autodesk Inc.
+"""
 edition = "2021"
+repository = "https://github.com/mickvangelderen/fbx"
+license = "MIT OR Apache-2.0"
+documentation = "https://docs.rs/fbx"
+homepage = "https://github.com/mickvangelderen/fbx"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
