@@ -13,6 +13,7 @@ repository = "https://github.com/mickvangelderen/fbx"
 license = "MIT OR Apache-2.0"
 documentation = "https://docs.rs/fbx"
 homepage = "https://github.com/mickvangelderen/fbx"
+include = ["/src", "/LICENSE-APACHE.txt", "/LICENSE-MIT.txt"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -22,5 +23,3 @@ thiserror = "1.0.2"
 
 [dev-dependencies]
 clap = { version = "4.0", features = ["derive"] }
-
-[lints]
